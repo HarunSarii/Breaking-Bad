@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Card from "./components/Card";
-import data from "./data.json";
+// import data from "./data.json";
+import axios from "axios";
 
 function App() {
+  const [itemList, setItemList] = useState([]);
+
+  useEffect(() => {
+    // fetch("https://breakingbadapi.com/api/characters")
+    //   .then((response) => response.json())
+    //   .then((data) => setItemList(data));
+
+    axios
+      .get("https://breakingbadapi.com/api/characters")
+      .then((res) => setItemList(res.data));
+  }, []);
+
   return (
     <div className="App">
       <header className="header">
@@ -12,7 +25,7 @@ function App() {
         />
       </header>
       <div className="cards">
-        {data?.map((item) => (
+        {itemList?.map((item) => (
           <Card key={item.char_id} item={item} />
         ))}
       </div>
